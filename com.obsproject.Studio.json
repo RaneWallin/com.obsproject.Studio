@@ -192,6 +192,67 @@
       ]
     },
     {
+      "name" : "mbedtls",
+      "buildsystem" : "cmake-ninja",
+      "builddir" : true,
+      "config-opts" : [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+        "-DUSE_SHARED_MBEDTLS_LIBRARY=ON",
+        "-DUSE_STATIC_MBEDTLS_LIBRARY=OFF",
+        "-DENABLE_TESTING=OFF",
+        "-DENABLE_PROGRAMS=OFF"
+      ],
+      "cleanup" : [
+        "/include"
+      ],
+      "sources" : [
+        {
+          "type" : "archive",
+          "url" : "https://tls.mbed.org/download/mbedtls-2.16.5-apache.tgz",
+          "sha256" : "65b4c6cec83e048fd1c675e9a29a394ea30ad0371d37b5742453f74084e7b04d"
+        }
+      ]
+    },
+    {
+      "name" : "jack2",
+      "buildsystem" : "simple",
+      "build-commands" : [
+        "./waf configure --prefix=/app --htmldir=/app/share/doc/jack/ --classic",
+        "./waf build -j $FLATPAK_BUILDER_N_JOBS",
+        "./waf install"
+      ],
+      "cleanup" : [
+        "/bin",
+        "/share",
+        "/lib/jack",
+        "/lib/libjackserver.so*"
+      ],
+      "sources" : [
+        {
+          "type" : "archive",
+          "url" : "https://github.com/jackaudio/jack2/releases/download/v1.9.14/v1.9.14.tar.gz",
+          "sha256" : "a20a32366780c0061fd58fbb5f09e514ea9b7ce6e53b080a44b11a558a83217c"
+        }
+      ]
+    },
+    {
+      "name" : "pipewire",
+      "buildsystem" : "meson",
+      "config-opts" : [
+        "-Dbluez5=false",
+        "-Dexamples=false",
+        "-Dman=false",
+        "-Dtests=false"
+      ],
+      "sources" : [
+        {
+          "type" : "git",
+          "url" : "https://gitlab.freedesktop.org/pipewire/pipewire.git"
+        }
+      ]
+    },
+    {
       "name": "obs",
       "buildsystem": "cmake-ninja",
       "builddir": true,
